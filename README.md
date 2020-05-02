@@ -86,15 +86,18 @@ npm i helmet --save
 ```
 
 ### cookie-parser
-> 요청된 쿠키를 쉽게 추출할 수 있도록 도와주는 미들웨어
->> req.cookies 프로퍼티를 사용
+> cookie를 전달받아서 사용할 수 있도록 만들어주는 미들웨어
+>> req.cookies 프로퍼티를 사용 <br />
+>> 사용자 인증 같은 곳에서 쿠키를 검사할 때 사용
 ```
 npm i cookie-parser --save
 ```
 
 ### body-parser
 > form으로 부터 전송된 POST 요청 데이터를 추출할 수 있도록 만들어 주는 미들 웨어(서버가 받게 되므로 맞게 전송해야함)
->> req.body 프로퍼티를 사용
+>> req.body 프로퍼티를 사용 <br />
+>> 사용자가 웹사이트로 전달하는 정보들을 검사하는 미들웨어.
+request정보에서 form이나 json 형태로 된 body를 검사해 아바타의 사진이나 비디오를 업로드 할 때, 제목이나 댓글 같은 정보를 전달할때 사용
 
 - 문법 예시(서버의 형식이 일반적인 HTML): app.use(bodyParser.urlencoded({ extended: true }))
 - 문법 예시(서버의 형식이 json일 경우): app.use(bodyParser().json())
@@ -105,3 +108,135 @@ npm i body-parser --save
 ```
 
 ## MVC
+> 디자인 패턴중 하나
+>> M (data) <br />
+>> V (how does the data look) <br />
+>> C (function that looks for the data) 
+
+> ![ex_screenshot](https://media.prod.mdn.mozit.cloud/attachments/2016/12/06/14456/6a97461a03a5329243b994347c47f12b/MVC%20Express.png)
+
+### Controller
+> 모델로부터 요청된 데이터를 얻어내거나, 데이터를 나타내는 HTML  페이지를 내고, 이것을 브라우져의 화면으로 사용자에게 전달한다.
+>> router(URL)와 controller(router의 로직) 분리하기
+
+- 공통 routes 처리 예시: 
+```
+// Global
+const HOME = "/";
+const JOIN = "/join";
+const LOGIN = "/login";
+const LOGOUT = "/logout";
+const SEARCH = "/search";
+
+// Users
+const USERS = "/users";
+const USER_DETAIL = "/:id";
+const EDIT_PROFILE = "/edit-profile";
+const CHANGE_PASSWORD = "/change-password";
+
+// Videos
+const VIDEOS = "/videos";
+const UPLOAD = "/upload";
+const VIDEO_DETAIL = "/:id";
+const EDIT_VIDEO = "/:id/edit";
+const DELETE_VIDEO = "/:id/delete";
+
+const routes = {
+  home: HOME,
+  join: JOIN,
+  login: LOGIN,
+  logout: LOGOUT,
+  search: SEARCH,
+  users: USERS,
+  userDetail: USER_DETAIL,
+  editProfile: EDIT_PROFILE,
+  changePassword: CHANGE_PASSWORD,
+  videos: VIDEOS,
+  upload: UPLOAD,
+  videoDetail: VIDEO_DETAIL,
+  editVideo: EDIT_VIDEO,
+  deleteVideo: DELETE_VIDEO
+};
+
+export default routes;
+```
+
+- globalRouter 예시: 
+```
+import express from "express";
+import routes from "../routes";
+
+const globalRouter = express.Router();
+
+globalRouter.get(routes.home, home);
+globalRouter.get(routes.search, search);
+globalRouter.get(routes.join, join);
+globalRouter.get(routes.login, login);
+
+export default globalRouter;
+```
+
+- userController controller 예시:
+```
+export const join = (req, res) => res.send("Join");
+export const login = (req, res) => res.send("Login");
+export const login = (req, res) => res.send("Search");
+```
+
+### View
+> 사용자가 controller를 조작하면 controller는 model을 통해서 데이터를 가져오고 그 정보를 바탕으로 시각적인 표현을 담당
+>> pug, ejs, html 등등 <br />
+>> <a href="https://pugjs.org/api/getting-started.html" target="_blank">PUG</a>
+
+```
+npm i pug --save
+```
+
+- <a href="https://expressjs.com/en/5x/api.html#app.set" target="_blank">Express engine설정</a>
+- view engine 설정: app.set("view engine", "pug"); 
+
+#### pug 몇가지 사용법 
++ 공통 파일에 block content 작성 후 각각의 불러오는 페이지에 extends layouts/main(경로) 작성
++ 페이지의 일부분: include ../partials/header(경로)
++ Express middleware locals 
+  + res.locals.siteName = "WeTube"; 미들웨어 작성 예시
+  + title  | #{siteName} pug 작성 예시
+  + <a href="https://expressjs.com/en/5x/api.html#res.locals" target="_blank">Express locals</a>
++ 각각 페이지에 변수 넣는법: export const home = (req, res) => res.render("home", { pageTitle: "Home" });
+  + 첫번째 인자는 템플릿, 두번째 인자는 템플릿에 추가할 객체 정보
+
+#### search Controller 예시
+1. form 전송:
+```
+form(action=routes.search, method="get")
+  input(type="text", placeholder="Search by term...",name="term")
+```
+
+2. controller: 
+```
+const {
+  query: { term: searchingBy }
+} = req;
+res.render("search", { pageTitle: "Search", searchingBy });
+```
+3. view:
+```
+h3 Searching for: #{searchingBy}
+```
+
+### Model
+> 애플리케이션의 정보, 데이타를 나타냅니다.
+
+
+
+## Pages:
+- [ ] Home
+- [ ] Join
+- [ ] Login
+- [x] Search
+- [ ] User Detail
+- [ ] Edit Profile
+- [ ] Change Password
+- [ ] Upload
+- [ ] Video Detail
+- [ ] Edit Video
