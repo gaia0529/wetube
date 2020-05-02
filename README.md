@@ -104,7 +104,4 @@ npm i cookie-parser --save
 npm i body-parser --save
 ```
 
-## Routing
-
-
 ## MVC
