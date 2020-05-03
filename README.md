@@ -228,6 +228,50 @@ h3 Searching for: #{searchingBy}
 
 ### Model
 > 애플리케이션의 정보, 데이타를 나타냅니다.
+  >> mysql, mongodb, mariadb, Oracle, MS-SQL, SQLite 등등
+
+#### MongoDB
+> <a href="https://www.mongodb.com/download-center/community" target="_blank">MongDB 설치</a>
+>> https://javacpro.tistory.com/64 설치 참고
+
+##### dotenv
+> 노출되지 말아야할 정보를 숨길 때 사용하는 환경변수 <br />
+> .env 파일 생성 후 작성
+>> 특정 process를 위한 key-value 형태의 변수 <br />
+>> Node.js 기반: process.env.NODE_ENV
+```
+npm i dotenv --save
+```
+
+##### mongoose
+> Node.js(javascript)와 MongoDB를 위한 ODM(Object Data Mapping) 라이브러리
+>> <a href="https://mongoosejs.com/" target="_blank">mongoose</a> <br />
+>> 프로그래밍 언어(Javascript) Object와 MongoDB의 데이터를 Mapping하여 호환성을 만들어내고, 간편한 CRUD를 가능하게 합니다. 필요에 따라 확장 및 변경이 가능한 자체 검증(Validation)과 타입 변환(Casting)이 가능하며, Express와 함께 사용하면 MVC 패턴 구현이 용이하다는 장점이 있습니다. 
+```
+npm i mongoose --save
+```
+
+> 셋팅
+```
+import mongoose from "mongoose";
+
+mongoose.connect(
+  "mongodb://localhost:27017/we-tube",
+  {
+    useNewUrlParser: true,
+    useFindAndModify: false
+  }
+);
+
+const db = mongoose.connection;
+
+const handleOpen = () => console.log("✅  Connected to DB");
+const handleError = error => console.log(`❌ Error on DB Connection:${error}`);
+
+db.once("open", handleOpen);
+db.on("error", handleError);
+```
+
 
 
 
