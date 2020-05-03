@@ -272,8 +272,39 @@ db.once("open", handleOpen);
 db.on("error", handleError);
 ```
 
+> mongoose 문법 예시
+>> Schema(구조에 관한 편의 기능들을 하나로 모아둔 형태)
+```
+const VideoSchema = new mongoose.Schema({
+    fileUrl: {
+        type: String,
+        required: "File URL is required"
+    },
+    title: {
+        type: String,
+        required: "Tilte is required"
+    },
+    description: String,
+    views: {
+        type: Number,
+        default: 0
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    comments: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Comment"
+        }
+    ]
+});
 
+const model = mongoose.model("Video", VideoSchema);
 
+export default model;
+```
 
 ## Pages:
 - [ ] Home
