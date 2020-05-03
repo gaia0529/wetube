@@ -224,6 +224,8 @@ res.render("search", { pageTitle: "Search", searchingBy });
 h3 Searching for: #{searchingBy}
 ```
 
+> 각각 pug생성 후 html 작성(GET, POST) 연결
+
 ### Model
 > 애플리케이션의 정보, 데이타를 나타냅니다.
 
@@ -231,12 +233,12 @@ h3 Searching for: #{searchingBy}
 
 ## Pages:
 - [ ] Home
-- [ ] Join
-- [ ] Login
+- [x] Join
+- [x] Login
 - [x] Search
 - [ ] User Detail
-- [ ] Edit Profile
-- [ ] Change Password
-- [ ] Upload
+- [x] Edit Profile
+- [x] Change Password
+- [x] Upload
 - [ ] Video Detail
-- [ ] Edit Video
+- [x] Edit Video
