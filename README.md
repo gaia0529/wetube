@@ -426,7 +426,7 @@ npm i @babel/polyfill babel-loader --save
 ```
 "scripts": {
     "dev:server": "nodemon --exec babel-node init.js --delay 2",
-    "dev:assets": "set WEBPACK_ENV=development&&webpack",
+    "dev:assets": "set WEBPACK_ENV=development&&webpack -w",
     "build:assets": "set WEBPACK_ENV=production&&webpack"
   }
 ``` 
