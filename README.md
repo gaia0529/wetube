@@ -425,7 +425,7 @@ npm i @babel/polyfill babel-loader --save
 #### package.js 파일 수정
 ```
 "scripts": {
-    "dev:server": "nodemon --exec babel-node init.js --delay 2",
+    "dev:server": "nodemon --exec babel-node init.js --delay 2 --ignore 'scss' --ignore 'static'",
     "dev:assets": "set WEBPACK_ENV=development&&webpack -w",
     "build:assets": "set WEBPACK_ENV=production&&webpack"
   }
@@ -488,5 +488,28 @@ module.exports = config;
 ## User Authentication
 ### PassportJS
 > 인증 절차 로직을 편하게 작업할 수 있게 도와주는 Node.js 미들웨어
->> <a href="http://www.passportjs.org/" target="_blank">Passportjs</a>
+>> <a href="http://www.passportjs.org/" target="_blank">Passportjs</a> <br />
+```
+npm i passport --save
+```
+
+> 패스워드 설정, 패스워드 확인 등을 자동으로 해주는 package
+>> <a href="https://github.com/saintedlama/passport-local-mongoose" target="_blank">passport-local-mongoose</a> <br />
+>> 설정예시: UserSchema.plugin(passportLocalMongoose, { usernameField: "email" });<br />
+>> <a href="http://www.passportjs.org/docs/username-password/" target="_blank">Username, Password 설정</a>
+```
+npm i passport-local-mongoose passport-local --save
+```
+
+> passport.js 파일생성 후 설정
+```
+import passport from "passport";
+import User from "./models/User";
+
+passport.use(User.createStrategy());
+
+passport.serializeUser(User.serializeUser()); //쿠키 설정
+passport.deserializeUser(User.deserializeUser()); // 쿠키 해석
+```
+
 
