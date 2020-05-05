@@ -486,4 +486,7 @@ module.exports = config;
 ```
 
 ## User Authentication
+### PassportJS
+> 인증 절차 로직을 편하게 작업할 수 있게 도와주는 Node.js 미들웨어
+>> <a href="http://www.passportjs.org/" target="_blank">Passportjs</a>
 
