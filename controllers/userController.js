@@ -43,7 +43,7 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
   const {
     _json: { id, avatar_url: avatarUrl, name, email },
   } = profile;
-  console.log(profile);
+
   try {
     const user = await User.findOne({ email });
     if (user) {
@@ -64,6 +64,37 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
   }
 };
 export const postGithubLogIn = (req, res) => {
+  res.redirect(routes.home);
+};
+
+export const googleLogin = passport.authenticate("google", {
+  scope: ["profile", "email"],
+});
+export const googleLoginCallback = async (_, __, profile, cb) => {
+  const {
+    _json: { id, avatar_url: avatarUrl, name, email },
+  } = profile;
+
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.googleId = id;
+      user.save();
+      return cb(null, user);
+    }
+
+    const newUser = await User.create({
+      name,
+      email,
+      googleId: id,
+      avatarUrl,
+    });
+    return cb(null, newUser);
+  } catch (error) {
+    return cb(error);
+  }
+};
+export const postGoogleLogIn = (req, res) => {
   res.redirect(routes.home);
 };
 
