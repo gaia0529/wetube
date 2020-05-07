@@ -584,4 +584,16 @@ npm i connect-mongo --save
 npm i passport-github --save
 ```
 
+> 순서
+1. github사이트 이동 후 권한 승인
+2. 사용자의 정보를 /auth/github/callback url로 보내줌
+3. passport가 함수(githubLoginCallback) 호출 후 실행(profile정보) <br />githubLoginCallback함수는 callback(cb) 함수를 꼭 리턴해야함. cb(error, user)함수는 error가 있는지 user가 있는지 알려준다.
+4. error면 login페이지로 이동.
+5. user가 존재하면 쿠키를 만들고[makeCookie(user)], 쿠키를 저장하고[saveCookie(cookie)], 저장된 쿠키를 브라우저[sendCookie(savedCookie)]로 보낸다.
+
+> email체크시에는 안될수 있으니 github사이트의 email을 public으로 바꿔준다.
+
 #### Google PassportJS
+```
+npm i passport-google --save
+```

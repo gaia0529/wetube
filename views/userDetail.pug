@@ -1,4 +1,13 @@
 extends layouts/main
 
 block content
-    p userDetail
+    .user-profile
+        .user-profile__header
+            if user.avatarUrl
+                img.avatar(src=user.avatarUrl)
+            else 
+                img.avatar(src="https://postfiles.pstatic.net/MjAyMDAzMTJfMTQ1/MDAxNTgzOTg4MjI3NjY4.WzK9Bdf5PtEvFMYyymTqQqjVRdgiQvW_BPX_KlnUlJ8g.Rhwt2PlpykVpmreCedycrYqubUm8WQRAEXAfFmrQOdsg.JPEG.qksgkek95/1.JPG?type=w966")
+            
+            h4.profile__username=user.name
+
+            
