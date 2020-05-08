@@ -599,3 +599,66 @@ npm i passport-github --save
 ```
 npm i passport-google-oauth20 --save
 ```
+
+#### Password
+
+> <a href="https://www.npmjs.com/package/passport-local-mongoose" target="_blank">changePassword</a>
+
+#### create to video
+
+> 비디오 작성자 추가
+
+1. 작성자 db추가
+
+```
+creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  }
+  를 Video.js db추가
+```
+
+2. video 업로드시 새로운 id push
+
+```
+req.user.videos.push(newVideo.id);
+req.user.save();
+```
+
+3. 업로드 후 디테일 페이지로 이동 후 비디오 정보 저장<br />
+   단. populate로 join시킨다.
+
+```
+const video = await Video.findById(id).populate("creator");
+console.log(video);
+
+creator조인 후 형태(Video.js엣 User.js를 조인)
+
+{
+  views: 0,
+  comments: [],
+  _id: 5eb50c435c5d462d4c624280,
+  fileUrl: 'uploads\\videos\\30ed450f52fffda0f06b618e147f04ae',
+  title: 'first Video',
+  description: '11111',
+  creator: {
+    comments: [],
+    videos: [ 5eb50c435c5d462d4c624280 ],
+    _id: 5eb22c70b7861920e4aaafe0,
+    name: 'etc',
+    email: 'etc@nate.com',
+    __v: 1,
+    avatarUrl: 'uploads\\avatars\\a673e31b508c11276cba0b5be6b669be'
+  },
+  createdAt: 2020-05-08T07:37:39.446Z,
+  __v: 0
+}
+```
+
+4. 해당작성자만 수정, 삭제 권한을 준다.
+
+```
+if (video.creator !== req.user.id)
+```
+
+### video reccording
