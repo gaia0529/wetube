@@ -632,7 +632,7 @@ req.user.save();
 const video = await Video.findById(id).populate("creator");
 console.log(video);
 
-creator조인 후 형태(Video.js엣 User.js를 조인)
+creator조인 후 형태(Video.js에 User.js를 조인)
 
 {
   views: 0,
