@@ -661,4 +661,6 @@ creator조인 후 형태(Video.js에 User.js를 조인)
 if (video.creator !== req.user.id)
 ```
 
-### video reccording
+### video Custom & Reccording
+> <a href="" target="_blank">video Custom</a> <br />
+> <a href="" target="_blank">video Reccording</a>

@@ -1,20 +1,22 @@
 extends layouts/main
+include mixins/videoBlock
 
 block content
     .user-profile
         .user-profile__header
-            if user.avatarUrl
-                img.avatar(src=user.avatarUrl)
-            else 
-                img.avatar(src="https://postfiles.pstatic.net/MjAyMDAzMTJfMTQ1/MDAxNTgzOTg4MjI3NjY4.WzK9Bdf5PtEvFMYyymTqQqjVRdgiQvW_BPX_KlnUlJ8g.Rhwt2PlpykVpmreCedycrYqubUm8WQRAEXAfFmrQOdsg.JPEG.qksgkek95/1.JPG?type=w966")
-            
+            img.u-avatar(src=user.avatarUrl)
             h4.profile__username=user.name
-        
-        if user.id === loggedUser.id
+        if loggedUser && loggedUser.id === user.id
             .user-profile__btns
                 a(href=`/users${routes.editProfile}`)
                     button ✏️ Edit Profile
                 a(href=`/users${routes.changePassword}`)
                     button 🔒 Change Password
-
-            
+        .home-videos
+            each item in user.videos 
+                +videoBlock({
+                    id:item.id,
+                    title:item.title,
+                    views:item.views,
+                    videoFile:item.fileUrl
+                })
